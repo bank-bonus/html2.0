@@ -1,7 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 
-const apiKey = process.env.API_KEY || '';
-const ai = new GoogleGenAI({ apiKey });
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 // Helper to strip markdown code blocks if the model adds them
 const cleanCode = (text: string): string => {
@@ -21,8 +20,8 @@ const cleanCode = (text: string): string => {
 };
 
 export const improveGameCode = async (currentCode: string, instruction: string): Promise<string> => {
-  if (!apiKey) {
-    throw new Error("API Key is missing");
+  if (!process.env.API_KEY) {
+    throw new Error("API Key is missing from process.env.API_KEY");
   }
 
   const model = "gemini-2.5-flash"; // Fast and capable for code

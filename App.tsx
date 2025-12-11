@@ -30,8 +30,11 @@ const App: React.FC = () => {
     try {
       const improvedCode = await improveGameCode(gameCode, instruction);
       setGameCode(improvedCode);
-    } catch (err) {
-      setError("Не удалось улучшить код. Проверьте API ключ или попробуйте позже.");
+    } catch (err: any) {
+      // Display the actual error message from the API or service
+      const errorMessage = err.message || "Неизвестная ошибка";
+      setError(`Ошибка: ${errorMessage}`);
+      console.error(err);
     } finally {
       setIsLoading(false);
     }
@@ -163,7 +166,7 @@ const App: React.FC = () => {
                   </div>
 
                   {error && (
-                    <div className="p-3 bg-red-900/20 border border-red-800 rounded-lg text-red-200 text-xs">
+                    <div className="p-3 bg-red-900/20 border border-red-800 rounded-lg text-red-200 text-xs break-words">
                       {error}
                     </div>
                   )}
